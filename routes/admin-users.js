@@ -72,7 +72,7 @@ User.find({},function(error,user)
 
 });
 
-router.post("/admin-login",verifyRole(['admin']),async (req, res) => {
+router.post("/admin-login",async (req, res) => {
 
   await adminLogin(req.body,"admin",res);
 
