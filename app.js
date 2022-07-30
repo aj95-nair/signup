@@ -3,12 +3,11 @@ const app = express();
 const Logger = require("morgan");
 const Parser = require("body-parser");
 const mongoose = require("mongoose");
-
-//const patientRoutes = require("./api/routes/patients");
-const userRoutes = require('./routes/users');
-
+const passport = require("passport");
+const userRoutes = require('./routes/admin-users');
+const CORS = require('cors')
 mongoose.connect(
-  "mongodb://127.0.0.1:27017/Hospital",
+  "mongodb+srv://admin:admin@hospital-management.xkqgfiw.mongodb.net/?retryWrites=true&w=majority",
 );
 
 const db = mongoose.connection;
@@ -19,23 +18,26 @@ db.once("open", function () {
 
 
 app.use(Logger("dev"));
+
 //app.use('/uploads', express.static('uploads'));
 app.use(Parser.urlencoded({ extended: false }));
 app.use(Parser.json());
-
-app.use((req, res, next) => {
+//app.use(CORS());
+/*app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+    res.header("Access-Control-Allow-Methods", "PUT, POST, DELETE, GET");
     return res.status(200).json({});
   }
   next();
 });
-
+*/
+app.use(passport.initialize());
+require('./middlewares/passport')(passport);
 //app.use("/patients", patientRoutes);
 app.use("/users", userRoutes);
 
