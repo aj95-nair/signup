@@ -7,7 +7,7 @@ const passport = require("passport");
 const userRoutes = require('./routes/admin-users');
 const CORS = require('cors')
 mongoose.connect(
-  "mongodb+srv://admin:admin@hospital-management.xkqgfiw.mongodb.net/?retryWrites=true&w=majority",
+  "mongodb://35.202.7.81:27017/hospital",
 );
 
 const db = mongoose.connection;
